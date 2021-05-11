@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "bootstrap": "^3.4.1",
     "core-js": "^3.6.5",
     "node-sass": "^4.13.0",
     "sass-loader": "^8.0.0",
