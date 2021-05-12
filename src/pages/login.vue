@@ -6,7 +6,7 @@
         <label for="inputEmail3" class="col-sm-2 control-label">账号：</label>
         <div class="col-sm-10">
           <input
-            type="email"
+            type="text"
             class="form-control"
             id="inputEmail3"
             placeholder="请输入账号"
@@ -30,7 +30,7 @@
       </div>
       <div class="form-group">
         <div class="col-sm-12">
-          <button type="submit" class="btn btn-primary btn-block">登录</button>
+          <button type="submit" class="btn btn-primary btn-block" @click="login()">登录</button>
           <button type="submit" class="btn btn-primary btn-block" @click="register();">注册</button>
         </div>
       </div>
@@ -47,8 +47,18 @@ export default {
         }
     },
   methods: {
-      register(){
+      register() {
            this.$router.push("/register");
+      },
+      login() {
+        const { userName, password } = this
+        this.axios.post("/user/login",{
+          userName,
+          password,
+          gender:3,
+        }).then((res) => {
+          console.log(res);
+        })
       }
   }
 };

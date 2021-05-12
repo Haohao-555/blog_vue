@@ -6,8 +6,8 @@
     </div>
 </template>
 <script>
-import navHeader from '../components/header'
-import navFooter from '../components/footer'
+import navHeader from '../components/navHeader'
+import navFooter from '../components/navFooter'
 export default {
     name: "home",
     components: {
