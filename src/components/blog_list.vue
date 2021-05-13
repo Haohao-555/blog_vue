@@ -1,24 +1,24 @@
 <template>
-  <div class="blog_list col-lg-12">
+  <div class="blog_list col-md-12 col-sm-12 col-xs-12">
     <div
-      class="blog_container col-lg-12"
+      class="blog_container col-md-12 col-sm-12 col-xs-12"
       v-for="(item, index) of blogList"
       :key="index"
     >
-      <div class="top col-lg-12">
+      <div class="top col-md-12 col-sm-12 col-xs-12">
         <img :src="item.touxiang" />
         <span class="nickName">{{ item.nickName }}</span>
       </div>
-      <div class="wrapper col-lg-12">
+      <div class="wrapper col-md-12 col-sm-12 col-xs-12">
         <div class="col-lg-10">
           <p class="content">{{ item.content }}</p>
         </div>
         
-        <div class="col-lg-2">
+        <div class="col-md-2 col-sm-2 col-xs-2">
           <img :src="item.img" />
         </div>
       </div>
-      <div class="createTime col-lg-12">
+      <div class="createTime col-md-12 col-sm-12 col-xs-12">
           <span>{{item.createTime}}</span>
       </div>
     </div>

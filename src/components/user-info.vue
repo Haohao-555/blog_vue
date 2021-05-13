@@ -1,10 +1,10 @@
 <template>
-  <div class="userInfo col-lg-12">
+  <div class="userInfo col-md-12 col-sm-12 col-xs-12">
     <div class="top">
       <img :src="userInfo.touxiang" />
       <h3 class="userName">{{ userInfo.userName }}</h3>
     </div>
-    <span>@提到我的{{ userInfo.atMe }}</span>
+    <span @click="$emit('atMe')">@提到我的（{{ userInfo.atMe }}）</span>
   </div>
 </template>
 <script>
@@ -37,6 +37,7 @@ export default {
        font-weight: bold;
        color: #007bff;
        font-size: 20px;
+       cursor: pointer;
   }
 }
 </style>

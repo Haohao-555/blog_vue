@@ -44,6 +44,7 @@ export default {
         return {
             userName:'',
             password: '',
+            res: {}
         }
     },
   methods: {
@@ -57,7 +58,7 @@ export default {
           password,
           gender:3,
         }).then((res) => {
-          console.log(res);
+          alert(res)
         })
       }
   }

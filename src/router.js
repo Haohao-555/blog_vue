@@ -7,6 +7,7 @@ import Square from './pages/square'
 import Setting from './pages/setting'
 import Login from './pages/login'
 import Register from './pages/register'
+import AtMe from './pages/atMe'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
               path: '/setting',
               name: 'Setting',
               component: Setting,
+            },
+            { // atMe
+                path: '/atMe',
+                name: 'AtMe',
+                component: AtMe,
             }
         ]
     },

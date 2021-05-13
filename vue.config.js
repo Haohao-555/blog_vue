@@ -4,7 +4,7 @@ module.exports = {
       port:8080,
       proxy:{
         '/api':{
-          target:'http://127.0.0.1:7000/',
+          target:'http://127.0.0.1:7000',
           changeOrigin:true,
           pathRewrite:{
             '/api':'/api'
@@ -16,8 +16,8 @@ module.exports = {
     // outputDir:'dist',
     // indexPath:'index2.html',
     // lintOnSave:false,
-    productionSourceMap:true,
-    chainWebpack:(config)=>{
-      config.plugins.delete('prefetch');
-    }
+    // productionSourceMap:true,
+    // chainWebpack:(config)=>{
+    //   config.plugins.delete('prefetch');
+    // }
   }

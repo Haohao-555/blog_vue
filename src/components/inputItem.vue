@@ -1,9 +1,9 @@
 <template>
-  <div class="inputItem col-lg-12">
-    <div class="col-lg-12">
+  <div class="inputItem col-md-12 col-sm-12 col-xs-12">
+    <div class="col-md-12 col-sm-12">
       <textarea class="form-control" rows="4" style="resize: none" v-model="content"></textarea>
     </div>
-    <div class="col-lg-7 pic" style="padding-top: 10px"> 
+    <div class="col-md-7 col-sm-7 col-xs-7 pic" style="padding-top: 10px"> 
       <button type="button" class="btn btn-primary" @click="submit">发布微博</button>
       <a>插入一张图片</a>
     </div>

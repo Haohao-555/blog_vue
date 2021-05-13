@@ -1,11 +1,9 @@
 <template>
-    <div class="fansList col-lg-12">
+    <div class="fansList col-md-12 col-sm-12 col-xs-12">
         <h3>粉丝 ({{fansNum}})</h3>
-        <div class="fan col-lg-4" v-for="(item, index) of fansList" :key="index">
-            <div class="fan_item ">
-                <img :src="item.touxiang" alt="">
-                <span>{{item.nickName}}</span>
-            </div>
+        <div class="fan col-md-3 col-sm-4 col-xs-6" v-for="(item, index) of fansList" :key="index">
+                <img :src="item.touxiang">
+                <span @click="profile(index)">{{item.nickName}}</span>
         </div>
     </div>
 </template>
@@ -15,7 +13,12 @@ export default {
     props: {
         fansList: Array,
         fansNum: Number,
-    }
+    },
+    methods: {
+        profile(index) {
+            this.$emit('profile',this.fansList[index].userName) 
+        }
+    },
 }
 </script>
 <style lang="scss">
@@ -33,15 +36,18 @@ export default {
             padding-top: 13px;
         }
         .fan {
+            padding-left: 0px;
            img {
-              width: 50px;
-              height: 50px;
+              width: 100%;
+              height: 100%;
            } 
            span {
                display: block;
                text-align: center;
                padding-bottom: 10px;
+               padding-top: 6px;
                cursor: pointer;
+               font-size: 14px; 
            }
         }
     }

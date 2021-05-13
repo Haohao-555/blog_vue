@@ -1,5 +1,5 @@
 <template>
-    <div class="footer col-lg-12" >
+    <div class="navFooter col-md-12 col-sm-12 col-xs-12" >
        <div class="footer_container">
            <h2>基于 node + Vue 全家桶-微博系统</h2>
            <span>源码下载 www.baidu.com</span>
@@ -12,7 +12,7 @@ export default {
 }
 </script>
 <style lang="scss">
-    .footer {
+    .navFooter {
         margin-top:30px;
         width: 100%;
         height: 230px;

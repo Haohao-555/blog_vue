@@ -1,15 +1,18 @@
 <template>
   <div class="souye">
     <div class="index_container">
-      <div class="col-lg-9 left">
+      <div class="col-md-9 col-sm-9 col-xs-9 left">
         <input-item @fabu="fabu"></input-item>
         <blog-list :blogList="blogList"></blog-list>
+        <load-more v-show="isShow" @load="load"></load-more>
       </div>
-      <div class="col-lg-3 right">
-        <user-info :userInfo="userInfo"></user-info>
-        <fans :fansList="fansList" :fansNum="fansNum"></fans>
+      <div class="col-md-3 col-sm-3 col-xs-3 right">
+        <user-info :userInfo="userInfo" @atMe="atme"></user-info>
+        <fans :fansList="fansList" :fansNum="fansNum" @profile="profile"></fans>
+        <follower :followerList="followerList" :followerNum="followerNum" @profile="profile"></follower>
       </div>
     </div>
+     <nav-footer v-show="!isShow"></nav-footer>
   </div>
 </template>
 <script>
@@ -17,10 +20,14 @@ import inputItem from "../components/inputItem";
 import blogList from "../components/blog_list";
 import userInfo from "../components/user-info";
 import fans from "../components/fans";
+import follower from "../components/follower"
+import navFooter from "../components/navFooter";
+import loadMore from '../components/load-more.vue';
 export default {
   name: "index",
   data() {
     return {
+      isShow: true, //表示是否显示加载更多
       content: "",
       blogList: [
         {
@@ -73,24 +80,56 @@ export default {
           touxiang:
             "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
           nickName: "张三",
+          userName: "zhangsan",
         },
          {
           touxiang:
             "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
           nickName: "李四",
+          userName: "lisi",
         },
          {
           touxiang:
             "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
           nickName: "赵六",
+          userName: "zhaoliu",
         },
          {
           touxiang:
             "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
           nickName: "王一",
+          userName: "wangyi",
         },
       ],
       fansNum: 4,
+      followerList: [
+          {
+          touxiang:
+            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
+          nickName: "张三",
+          userName: "zhangsan",
+        },
+         {
+          touxiang:
+            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
+          nickName: "李四",
+          userName: "lisi",
+        },
+         {
+          touxiang:
+            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
+          nickName: "赵六",
+          userName: "zhaoliu",
+        },
+         {
+          touxiang:
+            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
+          nickName: "王一",
+          userName: "wangyi",
+        },
+      ],
+      followerNum:4,
+
     };
   },
   components: {
@@ -98,12 +137,48 @@ export default {
     blogList,
     userInfo,
     fans,
+    follower,
+    navFooter,
+    loadMore,
   },
 
   methods: {
     fabu(content) {
       this.content = content;
     },
+    atme() {
+      this.$router.push("/atMe");
+    },
+    profile(userName) {
+      this.$router.push("/profile/"+userName)
+    },
+    load() {
+      this.isShow = false
+      const list = [
+         {
+          id: 6,
+          content:
+            "内容1内容1内容1容1内容1内容1内容1内容1容11内容1内容1内容1内容1内容1",
+          nickName: "你爸爸",
+          touxiang:
+            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
+          img: "/img/1.jpg",
+          createTime: "2021.05.12 16:08",
+        },
+        {
+          id: 7,
+          content:
+            "内容2内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容",
+          nickName: "你爸爸2",
+          touxiang:
+            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
+          img: "/img/1.jpg",
+          createTime: "2021.05.12 16:04",
+        },
+      ]
+      this.blogList = this.blogList.concat(list)
+      
+    }
   },
 };
 </script>
@@ -114,10 +189,6 @@ export default {
     width: 80%;
     margin: 0 auto;
     padding-top: 10px;
-    .right {
-    //   background-color: yellow;
-      //   height: 1000px;
-    }
   }
 }
 </style>
