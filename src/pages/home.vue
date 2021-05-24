@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="home">
+    <!-- :isAt="isAt" -->
     <nav-header @go="go"></nav-header>
     <router-view></router-view>
-    
+    <el-backtop >回到顶部</el-backtop>
   </div>
 </template>
 <script>
@@ -12,26 +13,46 @@ export default {
   name: "home",
   components: {
     navHeader,
-   
   },
   data() {
     return {
-      type: 0,
+      // isAt: false,
     };
   },
+
+  // watch: {
+  //   $route: 'getPath'
+  // },
   methods: {
     go(type) {
       this.type = type;
       if (type == 1) {
-        this.$router.push("/index");
+        if (this.$route.path !== "/index") {
+          this.$router.push("/index");
+        }
       } else if (type == 2) {
-        this.$router.push("/profile/huangjiahao");
+        if (this.$route.path !== "/profile" ) {
+          this.$router.push("/profile");
+        }
       } else if (type == 3) {
-        this.$router.push("/square");
+        if (this.$route.path !== "/square") {
+          this.$router.push("/square");
+        }
       } else if (type == 4) {
-        this.$router.push("/setting");
+        if (this.$route.path !== "/setting") {
+          this.$router.push("/setting");
+        }
       }
     },
+
+    // getPath() {
+    //   let path = this.$route.path
+    //   if (path == "/atMe") {
+    //     this.isAt = true
+    //   } else {
+    //     this.isAt = false
+    //   }
+    // }
   },
 };
 </script>

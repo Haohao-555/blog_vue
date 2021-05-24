@@ -1,76 +1,73 @@
 <template>
   <div class="atMe">
     <div class="atMe_container">
-      <h3>提到我的（{{readnum}}未读）</h3>
+      <h3>提到我的（{{ readnum }}未读）</h3>
       <div class="col-md-9 col-sm-9 col-xs-9 left">
-        <input-item @fabu="fabu"></input-item>
-        <blog-list :blogList="blogList"></blog-list>
+        <input-item @fabu="fabu" :content="content"></input-item>
+        <blog-list :blogList="blogList" v-if="isRouterAlive" :huifu="true" @hui="hui"></blog-list>
+        <load-more v-if="isShow" @load="getBlogList"></load-more>
       </div>
     </div>
-     <nav-footer></nav-footer>
   </div>
 </template>
 <script>
 import inputItem from "../components/inputItem";
-import navFooter from "../components/navFooter";
+import loadMore from "../components/load-more";
 import blogList from "../components/blog_list";
+import formatContent from "../utils/_format";
 export default {
   name: "atMe",
   components: {
-    navFooter,
     blogList,
-    inputItem
+    inputItem,
+    loadMore,
   },
   data() {
     return {
-       blogList: [
-        {
-          id: 1,
-          content:
-            "内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容11内容1内容1内容1内容1内容1内容1内容1内容1内容1内1内容1内容1内容1内容1内容1内容1内容1内容1内容1内1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内1内容1内容1内容1内容1内容1内容1内容1内容1内容1内内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1",
-          nickName: "用户1",
-          touxiang:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
-          img: "/img/1.jpg",
-          createTime: "2021.05.12 16:08",
-        },
-        {
-          id: 2,
-          content:
-            "内容2内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容",
-          nickName: "用户2",
-          touxiang:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
-          img: "/img/1.jpg",
-          createTime: "2021.05.12 16:04",
-        },
-        {
-          id: 3,
-          content: "内容3",
-          nickName: "用户3",
-          touxiang:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
-          img: "/img/1.jpg",
-          createTime: "2021.05.12 16:01",
-        },
-        {
-          id: 4,
-          content: "内容4",
-          nickName: "用户4",
-          touxiang:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
-          img: "/img/1.jpg",
-          createTime: "2021.05.12 16:00",
-        },
-      ],
-      readnum:4,
-      content: '',
-    }
+      isShow: true, //表示是否显示加载更多
+      blogList: [],
+      readnum: 4,
+      content: "",
+      isRouterAlive: true,
+      pageIndex: 0,
+      members: [],
+    };
+  },
+  mounted() {
+    this.getBlogList();
+  },
+  //父组件中通过provide来提供变量，在子组件中通过inject来注入变量。
+  provide() {
+    return {
+      reload: this.reload,
+    };
   },
   methods: {
+    reload() {
+      this.isRouterAlive = false; //先关闭，
+      this.$nextTick(function () {
+        this.isRouterAlive = true; //再打开
+      });
+    },
+
     fabu(content) {
-      this.content = content
-    }
+      this.content = content;
+    },
+
+    getBlogList() {
+      let URL = `/atMe//loadMore/` + this.pageIndex;
+      this.axios.get(URL).then((res) => {
+        this.readnum = res.count;
+        this.blogList = this.blogList.concat(res.blogList.map((item) => formatContent(item)));
+        this.pageIndex = res.pageIndex + 1;
+        this.isShow = !res.isEmpty;
+      });
+    },
+
+    // 回复
+    hui(content) {
+      this.content = content;
+    },
   },
 };
 </script>

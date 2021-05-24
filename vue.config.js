@@ -16,7 +16,7 @@ module.exports = {
     // outputDir:'dist',
     // indexPath:'index2.html',
     // lintOnSave:false,
-    // productionSourceMap:true,
+    productionSourceMap:false,
     // chainWebpack:(config)=>{
     //   config.plugins.delete('prefetch');
     // }

@@ -1,18 +1,27 @@
 <template>
   <div class="userInfo col-md-12 col-sm-12 col-xs-12">
     <div class="top">
-      <img :src="userInfo.touxiang" />
-      <h3 class="userName">{{ userInfo.userName }}</h3>
+      <img :src="userInfo.picture" />
+      <h3 class="userName">{{ userInfo.nickName}}</h3>
     </div>
-    <span @click="$emit('atMe')">@提到我的（{{ userInfo.atMe }}）</span>
+    <span @click="$emit('atMe')" v-if="flag">@提到我的（{{ atMe }}）</span>
+    
+    <button type="button" class="btn btn-primary" v-if="!guangzhu && !flag" @click="$emit('guanzhu')">关注</button>
+    <button type="button" class="btn btn-danger" v-if="guangzhu && !flag" @click="$emit('quxiao')">取消关注</button>
   </div>
 </template>
 <script>
 export default {
+  // 依赖注入
+  inject:['reload'],  
   name: "user-info",
   props: {
     userInfo: Object,
+    atMe: Number,
+    flag: Boolean,
+    guangzhu: Boolean,
   },
+  
 };
 </script>
 <style lang="scss">
@@ -25,6 +34,7 @@ export default {
       width: 80px;
       height: 80px;
       vertical-align: middle;
+      border-radius: 50%;
     }
     .userName {
       font-size: 26px;

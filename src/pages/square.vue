@@ -3,64 +3,73 @@
     <div class="square_container">
       <div class="col-md-9 col-sm-9 col-xs-9 left">
         <h3>广场页</h3>
-        <blog-list :blogList="blogList"></blog-list>
+        <blog-list :blogList="blogList" v-if="isRouterAlive" @profile="profile"></blog-list>
+        <load-more v-if="isShow" @load="getBlogList"></load-more>
       </div>
     </div>
-    <nav-footer></nav-footer>
+    
   </div>
 </template>
 <script>
 import blogList from "../components/blog_list";
-import navFooter from "../components/navFooter";
+import loadMore from "../components/load-more";
+import formatContent from "../utils/_format";
 export default {
   name: "square",
   data() {
     return {
-      blogList: [
-        {
-          id: 1,
-          content:
-            "内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容11内容1内容1内容1内容1内容1内容1内容1内容1内容1内1内容1内容1内容1内容1内容1内容1内容1内容1内容1内1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内1内容1内容1内容1内容1内容1内容1内容1内容1内容1内内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1",
-          nickName: "用户1",
-          touxiang:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
-          img: "/img/1.jpg",
-          createTime: "2021.05.12 16:08",
-        },
-        {
-          id: 2,
-          content:
-            "内容2内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容",
-          nickName: "用户2",
-          touxiang:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
-          img: "/img/1.jpg",
-          createTime: "2021.05.12 16:04",
-        },
-        {
-          id: 3,
-          content: "内容3",
-          nickName: "用户3",
-          touxiang:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
-          img: "/img/1.jpg",
-          createTime: "2021.05.12 16:01",
-        },
-        {
-          id: 4,
-          content: "内容4",
-          nickName: "用户4",
-          touxiang:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg",
-          img: "/img/1.jpg",
-          createTime: "2021.05.12 16:00",
-        },
-      ],
+      blogList: [],
+      pageIndex: 0,
+      isRouterAlive: true,
+      isShow: true,
     };
   },
   components: {
     blogList,
-    navFooter
+    loadMore,
+  },
+  //父组件中通过provide来提供变量，在子组件中通过inject来注入变量。
+  provide() {
+    return {
+      reload: this.reload,
+    };
+  },
+  mounted() {
+    this.getBlogList();
+  },
+  methods: {
+    reload() {
+      this.isRouterAlive = false; //先关闭，
+      this.$nextTick(function () {
+        this.isRouterAlive = true; //再打开
+      });
+    },
+    // 获取博客
+    getBlogList() {
+      let URL = `/square/loadMore/` + this.pageIndex;
+      this.axios.get(URL).then((res) => {
+        this.blogList = this.blogList.concat(res.blogList.map((item) => formatContent(item)));
+        this.pageIndex = res.pageIndex + 1;
+        this.isShow = !res.isEmpty;
+      });
+    },
+
+     // 去其他人的主页
+    profile(otherName) {
+      if (otherName == this.$store.state.userInfo.userName) {
+        sessionStorage.removeItem("otherName");
+        this.$router.push({
+          path: "/profile",
+        });
+      } else {
+        this.$router.push({
+          path: "/Otherprofile/" + otherName,
+          query: {
+            otherName,
+          },
+        });
+      }
+    },
   },
 };
 </script>

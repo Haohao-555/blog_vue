@@ -6,20 +6,21 @@
       :key="index"
     >
       <div class="top col-md-12 col-sm-12 col-xs-12">
-        <img :src="item.touxiang" />
-        <span class="nickName">{{ item.nickName }}</span>
+        <img :src="item.user.picture" />
+        <span class="nickName" @click="$emit('profile',`${item.user.userName}`)">{{ item.user.nickName }}</span>
       </div>
       <div class="wrapper col-md-12 col-sm-12 col-xs-12">
         <div class="col-lg-10">
-          <p class="content">{{ item.content }}</p>
+          <p class="content" v-html="item.contentFormat"></p>
         </div>
         
         <div class="col-md-2 col-sm-2 col-xs-2">
-          <img :src="item.img" />
+          <img :src="item.img" v-if="item.img? true: false"/>
         </div>
       </div>
       <div class="createTime col-md-12 col-sm-12 col-xs-12">
-          <span>{{item.createTime}}</span>
+          <span>{{item.createdAtFormat}}</span>
+          <span class="iconfont icon-huifu icon" v-if="huifu" @click="hui(index)">回复</span>
       </div>
     </div>
   </div>
@@ -27,13 +28,27 @@
 <script>
 export default {
   name: "blog-list",
+  // 依赖注入
+  inject:['reload'], 
+   
   props: {
     blogList: Array,
+    huifu:Boolean,
+  },
+  methods: {
+    hui(index) {
+      this.$emit('hui', this.blogList[index].content)
+    }
   },
 };
 </script>
 <style lang="scss">
 .blog_list {
+  a{
+    &:hover{
+      cursor: pointer;
+    }
+  }
   .blog_container {
     margin-top: 10px;
     position: relative;
@@ -42,12 +57,14 @@ export default {
       img {
         width: 50px;
         height: 50px;
+         border-radius: 50%;
       }
       .nickName {
         display: inline-block;
         margin-left: 10px;
         color: #007bff;
         font-size: 17px;
+        cursor: pointer;
       }
       .content {
         font-size: 17px;
@@ -76,6 +93,12 @@ export default {
     .createTime {
         position: absolute;
         bottom: 12px;
+        .icon {
+          padding-left: 12px;
+          font-size: 12px;
+          cursor: pointer;
+          color: #007bff;
+        }
     }
   }
 }

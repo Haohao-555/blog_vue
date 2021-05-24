@@ -1,78 +1,113 @@
 <template>
   <div class="login">
-    <h2>登录</h2>
-    <form class="form-horizontal">
+    <div class="form-horizontal" v-if="!isLogin">
       <div class="form-group">
-        <label for="inputEmail3" class="col-sm-2 control-label">账号：</label>
-        <div class="col-sm-10">
+        <h3 style="margin-left: 39px">登录</h3>
+      </div>
+      <div class="form-group">
+        <label for="inputAccount" class="col-sm-2 control-label">账号：</label>
+        <div class="col-sm-8">
           <input
             type="text"
             class="form-control"
-            id="inputEmail3"
+            id="inputAccount"
             placeholder="请输入账号"
-             v-model="userName"
+            v-model="userName"
           />
         </div>
       </div>
       <div class="form-group">
-        <label for="inputPassword3" class="col-sm-2 control-label"
-          >密码：</label
-        >
-        <div class="col-sm-10">
+        <label for="inputPassword" class="col-sm-2 control-label">密码：</label>
+        <div class="col-sm-8">
           <input
             type="password"
             class="form-control"
-            id="inputPassword3"
+            id="inputPassword"
             placeholder="请输入密码"
             v-model="password"
           />
         </div>
       </div>
       <div class="form-group">
-        <div class="col-sm-12">
-          <button type="submit" class="btn btn-primary btn-block" @click="login()">登录</button>
-          <button type="submit" class="btn btn-primary btn-block" @click="register();">注册</button>
+        <div class="col-sm-10 col-sm-offset-1">
+          <button type="button" class="btn btn-primary" @click="login">
+            登录
+          </button>
+          <button type="button" class="btn btn-link" @click="$router.push('/register')">
+            注册账号》》
+          </button>
         </div>
       </div>
-    </form>
+    </div>
+    <div class="already_login" v-if="isLogin">
+      <h2>登录</h2>
+      您已成功登录，请直接访问
+      <span @click="$router.push('/index')">首页</span>
+    </div>
   </div>
 </template>
 <script>
+import constant from "../conf/constant";
 export default {
   name: "login",
-   data() {
-        return {
-            userName:'',
-            password: '',
-            res: {}
-        }
-    },
+  data() {
+    return {
+      userName: "",
+      password: "",
+      isLogin: false,
+      account: "",
+    };
+  },
+  mounted() {
+    this.islogin();
+  },
   methods: {
-      register() {
-           this.$router.push("/register");
-      },
-      login() {
-        const { userName, password } = this
-        this.axios.post("/user/login",{
+
+    // 登录
+    login() {
+      const { userName, password } = this;
+      this.axios
+        .post("/user/login", {
           userName,
           password,
-          gender:3,
-        }).then((res) => {
-          alert(res)
         })
+        .then((res) => {
+          if (res.errno && res.errno != 0) { // 有错误
+            this.$message.warning(res.message);
+          } else {
+            // 将信息保存到 vuex
+            this.$store.dispatch("saveUserInfo", res);
+            this.$router.push("/index");
+          }
+        });
+    },
+
+    // 判断是否登录
+    islogin() {
+      // 获取 cookie来判断是否已经登录
+      if (this.$cookie.get(constant.COOKIE)) {
+        this.isLogin = true;
+      } else {
+        this.isLogin = false;
       }
-  }
+    },
+    
+  },
 };
 </script>
 <style lang="scss">
 .login {
-  text-align: center;
-  width: 756px;
-  align-items: center;
-  margin-left: -378px;
-  margin-right: -104px;
-  position: absolute;
-  left: 50%;
-  top: 30%;
+  max-width: 600px;
+  margin: 150px auto;
+  .already_login {
+    font-size: 18px;
+    h3 {
+      font-size: 24px;
+    }
+    span {
+      cursor: pointer;
+      color: #337ab7;
+    }
+  }
 }
 </style>

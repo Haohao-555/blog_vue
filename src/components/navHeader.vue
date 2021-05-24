@@ -1,18 +1,26 @@
 <template>
   <div class="navHeader">
     <div class="navheader_container">
-      <div class="item" style="font-size: 24px; padding-top:3px;">微博</div>
+      <div class="item" style="font-size: 24px; padding-top: 3px">微博</div>
       <div class="item" @click="go(1)">
-        <span class="index_img" :class="{active: type == 1? true: false}">首页</span>
+        <span class="iconfont icon-index" :class="{ active: type == 1 ? true : false }"
+          >首页</span
+        >
       </div>
       <div class="item" @click="go(2)">
-        <span class="profile_img" :class="{active: type == 2? true: false}">我的空间</span>
+        <span class="iconfont icon-gerenzhuye" :class="{ active: type == 2 ? true : false }"
+          >我的空间</span
+        >
       </div>
       <div class="item" @click="go(3)">
-        <span class="square_img" :class="{active: type == 3? true: false}">广场</span>
+        <span class="iconfont icon-guangchang" :class="{ active: type == 3 ? true : false }"
+          >广场</span
+        >
       </div>
       <div class="item" @click="go(4)">
-        <span class="setting_img" :class="{active: type == 4? true: false}">设置</span>
+        <span class="iconfont icon-shezhi" :class="{ active: type == 4 ? true : false }"
+          >设置</span
+        >
       </div>
     </div>
   </div>
@@ -20,16 +28,27 @@
 <script>
 export default {
   name: "navheader",
+  // props: {
+  //   isAt: Boolean,
+  // },
   data() {
     return {
-      type: 1,
+      type: 0,
     };
   },
+  // watch:{
+  //   isAt: 'isAtMe'
+  // },
   methods: {
     go(type) {
-      this.type = type;
+      // this.type = type;
       this.$emit("go", type);
     },
+    // isAtMe(res) {
+    //  if (res) {
+    //    this.type = 0
+    //  } 
+    // },
   },
 };
 </script>
@@ -62,33 +81,12 @@ export default {
         display: inline-block;
         margin-top: 12px;
         cursor: pointer;
-      }
-      .index_img {
-        background: url("/img/index.png") no-repeat;
-        background-position: center left;
-        background-size: 22px;
-        padding-left: 26px;
-      }
-      .profile_img {
-        background: url("/img/profile.png") no-repeat;
-        background-position: center left;
-        background-size: 24px 24px;
-        padding-left: 29px;
-      }
-      .square_img {
-        background: url("/img/square.png") no-repeat;
-        background-position: center left;
-        background-size: 24px 24px;
-        padding-left: 29px;
-      }
-      .setting_img {
-        background:  url("/img/setting.png") no-repeat;
-        background-position: center left;
-        background-size: 20px 20px;
-        padding-left: 24px;
+        &:hover {
+          color: #fff;
+        }
       }
       .active {
-       color: #fff;
+        color: #fff;
       }
     }
   }
