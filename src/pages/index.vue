@@ -45,7 +45,6 @@ import userInfo from "../components/user-info";
 import fans from "../components/fans";
 import follower from "../components/follower";
 import loadMore from "../components/load-more";
-
 import formatContent from "../utils/_format";
 export default {
   name: "index",

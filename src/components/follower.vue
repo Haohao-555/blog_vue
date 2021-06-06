@@ -34,6 +34,7 @@ export default {
 <style lang="scss">
 .followerList {
   padding-top: 2px;
+  border-bottom: 1px solid #007bff;
   h3 {
     font-size: 16px;
     font-weight: bold;

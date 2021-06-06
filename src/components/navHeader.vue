@@ -3,24 +3,19 @@
     <div class="navheader_container">
       <div class="item" style="font-size: 24px; padding-top: 3px">微博</div>
       <div class="item" @click="go(1)">
-        <span class="iconfont icon-index" :class="{ active: type == 1 ? true : false }"
-          >首页</span
-        >
+        <span class="iconfont icon-index">首页</span>
       </div>
       <div class="item" @click="go(2)">
-        <span class="iconfont icon-gerenzhuye" :class="{ active: type == 2 ? true : false }"
-          >我的空间</span
-        >
+        <span class="iconfont icon-gerenzhuye">我的空间</span>
       </div>
       <div class="item" @click="go(3)">
-        <span class="iconfont icon-guangchang" :class="{ active: type == 3 ? true : false }"
-          >广场</span
-        >
+        <span class="iconfont icon-guangchang">广场</span>
       </div>
       <div class="item" @click="go(4)">
-        <span class="iconfont icon-shezhi" :class="{ active: type == 4 ? true : false }"
-          >设置</span
-        >
+        <span class="iconfont icon-shezhi">设置</span>
+      </div>
+      <div class="item" @click="author()">
+        <span class="iconfont icon-zuozhe">作者</span>
       </div>
     </div>
   </div>
@@ -37,6 +32,9 @@ export default {
     go(type) {
       this.$emit("go", type);
     },
+    author() {
+      window.open("https://blog.csdn.net/weixin_44659458", "_blank")
+    }
   },
 };
 </script>

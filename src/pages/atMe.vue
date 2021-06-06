@@ -4,7 +4,7 @@
       <h3>提到我的（{{ readnum }}未读）</h3>
       <div class="col-md-9 col-sm-9 col-xs-9 left">
         <input-item @fabu="fabu" :content="content"></input-item>
-        <blog-list :blogList="blogList" :huifu="true" @hui="hui"></blog-list>
+        <blog-list :blogList="blogList" :huifu="true" @hui="hui" @profile="profile"></blog-list>
         <load-more v-if="isShow" @load="getBlogList"></load-more>
       </div>
     </div>
@@ -66,7 +66,23 @@ export default {
           }
         });
     },
-
+      // 去其他人的主页
+    profile(otherName) {
+      if (otherName == this.$store.state.userInfo.userName) {
+        sessionStorage.removeItem("otherName");
+        this.$router.push({
+          path: "/profile",
+        });
+      } else {
+        this.$router.push({
+          path: "/Otherprofile/" + otherName,
+          query: {
+            otherName,
+          },
+        });
+      }
+    },
+    
     getBlogList() {
       let URL = `/atMe/loadMore/` + this.pageIndex;
       this.axios.get(URL).then((res) => {

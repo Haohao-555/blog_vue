@@ -10,8 +10,8 @@ Vue.use(Router)
 
 
 const router = new Router({
-    // mode: 'history',
-    // base: '/weibo/',
+    mode: 'history',
+    base: '/weibo/',
     routes: [{
         path: '/',
         name: 'home',
