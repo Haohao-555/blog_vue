@@ -1,7 +1,8 @@
 <template>
   <div class="fansList col-md-12 col-sm-12 col-xs-12">
     <h3 class="iconfont icon-fensi" @click="$emit('getFans')">
-      粉丝 ({{ flag ? fansNum : "显示粉丝" }})
+      粉丝 
+      <span>({{ flag ? fansNum : "显示粉丝" }})</span>
     </h3>
     <div
       class="fan col-md-3 col-sm-4 col-xs-6"
@@ -42,20 +43,29 @@ export default {
     padding-bottom: 16px;
     padding-top: 13px;
     cursor: pointer;
+    span:hover {
+      text-decoration: underline;
+      color: #007bff;
+    }
   }
   .fan {
     padding-left: 0px;
+    padding-right:0px ;
+     text-align: center;
     img {
       width: 100%;
       height: 100%;
+      border-radius: 50%;
     }
     span {
-      display: block;
-      text-align: center;
       padding-bottom: 10px;
       padding-top: 6px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 12px; 
+      &:hover {
+        text-decoration: underline;
+        color: #007bff;
+      }
     }
   }
 }

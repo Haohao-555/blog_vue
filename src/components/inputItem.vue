@@ -2,13 +2,12 @@
   <div class="inputItem col-md-12 col-sm-12 col-xs-12">
     <div class="col-md-12 col-sm-12">
       <at-ta :members="members" name-key="fullName">
-        <!-- custom: with avatars -->
         <template v-slot:item="s">
           <img :src="s.item.picture" />
           <span>{{ s.item.nickName }} - {{ s.item.userName }}</span>
         </template>
         <el-input
-        id="textarea"
+          id="textarea"
           type="textarea"
           class="element-editor resizeNone"
           v-model="fullcontent"
@@ -25,55 +24,54 @@
   </div>
 </template>
 <script>
-// import at from 'vue-at'
 import AtTa from "vue-at/dist/vue-at-textarea";
 export default {
   name: "inputitem",
+  props: ["content"],
+  data() {
+    return {
+      members: [],
+      fullcontent: "",
+    };
+  },
   components: {
     AtTa,
   },
   mounted() {
     this.init();
   },
-  props: ['content'],
-   watch: {
+  watch: {
     content(newValue) {
       if (this.content != false) {
-         this.fullcontent = newValue;
+        this.fullcontent = newValue;
       }
     },
   },
-  data() {
-    return {
-      members: [],
-      fullcontent: '' ,
-    };
-  },
   methods: {
-    
     // 抛出
     submit() {
-      const content = document.getElementById('textarea').value
+      const content = document.getElementById("textarea").value;
       this.$emit("fabu", content);
-      this.fullcontent = ""
+      this.fullcontent = "";
     },
+    // 获取粉丝
     init() {
-        let URL = `/user_relation/getfollows`;
-        this.axios
-          .post(URL, {
-            userId: this.$store.state.userInfo.id,
-          })
-          .then((res) => {
-            this.members = res.userList.map((item) => {
-              let target = {};
-              Object.assign(target, item);
-              target.fullName = target.nickName + " - " + target.userName;
-              return Object.assign(item, target);
-            });
-            // 存入 vuex
-            this.$store.dispatch("saveFollowerList", res.userList);
-            this.$store.dispatch("saveFollowerNum", res.count);
+      let URL = `/user_relation/getfollows`;
+      this.axios
+        .post(URL, {
+          userId: this.$store.state.userInfo.id,
+        })
+        .then((res) => {
+          this.members = res.userList.map((item) => {
+            let target = {};
+            Object.assign(target, item);
+            target.fullName = target.nickName + " - " + target.userName;
+            return Object.assign(item, target);
           });
+          // 存入 vuex
+          this.$store.dispatch("saveFollowerList", res.userList);
+          this.$store.dispatch("saveFollowerNum", res.count);
+        });
     },
   },
 };
@@ -84,9 +82,10 @@ export default {
   border-bottom: 1px solid #007bff;
   padding-bottom: 22px;
   .resizeNone {
-     .el-textarea__inner{ //el_input中的隐藏属性
-         resize: none;  //主要是这个样式
-     }
+    .el-textarea__inner {
+      //el_input中的隐藏属性
+      resize: none; //主要是这个样式
+    }
   }
   .pic {
     padding-top: 10px;

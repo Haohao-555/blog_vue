@@ -1,9 +1,9 @@
 <template>
-  <div class="square">
+  <div class="square clearfix">
     <div class="square_container">
       <div class="col-md-9 col-sm-9 col-xs-9 left">
         <h3>广场页</h3>
-        <blog-list :blogList="blogList" v-if="isRouterAlive" @profile="profile"></blog-list>
+        <blog-list :blogList="blogList" @profile="profile"></blog-list>
         <load-more v-if="isShow" @load="getBlogList"></load-more>
       </div>
     </div>
@@ -20,7 +20,6 @@ export default {
     return {
       blogList: [],
       pageIndex: 0,
-      isRouterAlive: true,
       isShow: true,
     };
   },
@@ -28,22 +27,12 @@ export default {
     blogList,
     loadMore,
   },
-  //父组件中通过provide来提供变量，在子组件中通过inject来注入变量。
-  provide() {
-    return {
-      reload: this.reload,
-    };
-  },
+ 
   mounted() {
     this.getBlogList();
   },
   methods: {
-    reload() {
-      this.isRouterAlive = false; //先关闭，
-      this.$nextTick(function () {
-        this.isRouterAlive = true; //再打开
-      });
-    },
+   
     // 获取博客
     getBlogList() {
       let URL = `/square/loadMore/` + this.pageIndex;
@@ -88,5 +77,15 @@ export default {
       }
     }
   }
+}
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0px;
+  visibility: hidden;
+}
+.clearfix {
+  *zoom: 1;
 }
 </style>

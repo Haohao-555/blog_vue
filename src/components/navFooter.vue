@@ -17,7 +17,6 @@ export default {
 </script>
 <style lang="scss">
     .navFooter {
-        position: absolute;
         bottom: 0px;
         margin-top:126px;
         width: 100%;

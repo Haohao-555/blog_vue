@@ -1,5 +1,5 @@
 <template>
-  <div class="setting">
+  <div class="setting clearfix">
     <div class="set_container">
       <div class="top col-md-9 col-sm-9 col-xs-9">
         <h3>基本信息</h3>
@@ -99,23 +99,25 @@
           </div>
         </form>
       </div>
-      <div class="loginout col-md-9 col-sm-9 col-xs-9" style="text-align: center;">
-           <button
-                class="btn btn-danger"
-                style="width:300px; margin-top: 20px; margin-left:109px;"
-                @click="loginout"
-
-              >
-                退出登录
-              </button>
+      <div
+        class="loginout col-md-9 col-sm-9 col-xs-9"
+        style="text-align: center"
+      >
+        <button
+          class="btn btn-danger"
+          style="width: 300px; margin-top: 20px; margin-left: 109px"
+          @click="loginout"
+        >
+          退出登录
+        </button>
       </div>
     </div>
-    <nav-footer></nav-footer>
+    <nav-footer ></nav-footer>
   </div>
 </template>
 <script>
 import navFooter from "../components/navFooter";
-import constant from "../conf/constant"
+import constant from "../conf/constant";
 export default {
   name: "setting",
 
@@ -238,12 +240,12 @@ export default {
 
     // 退出登录
     loginout() {
-      this.axios.post('/user/logout').then(() => {
+      this.axios.post("/user/logout").then(() => {
         this.$cookie.delete(constant.COOKIE);
         this.$cookie.delete(constant.SESSION);
         this.$router.push("/login");
-      })
-    }
+      });
+    },
   },
 };
 </script>
@@ -272,11 +274,22 @@ export default {
       padding-bottom: 16px;
       border-bottom: 1px solid #007bff;
       h3 {
-        padding-left: 92px;
+        padding-left: 73px;
         font-size: 20px;
         padding-bottom: 12px;
+        padding-top: 20px;
       }
     }
   }
+}
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0px;
+  visibility: hidden;
+}
+.clearfix {
+  *zoom: 1;
 }
 </style>

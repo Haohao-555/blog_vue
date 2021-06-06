@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css'
 import { Message } from 'element-ui'
@@ -10,9 +10,10 @@ import { Backtop } from 'element-ui'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import store from './store/index'
 import {Input} from 'element-ui' 
-
+// import '../public/icon.css'
+// import '../public/reset.scss'
 import VueCookie from 'vue-cookie'
-
+import router from './router'
 // （代理）根据前端跨域做调整 /a/b: /api/a/b
 axios.defaults.baseURL = '/api';
 // axios.defaults.timeout = 8000;

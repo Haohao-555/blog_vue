@@ -28,27 +28,15 @@
 <script>
 export default {
   name: "navheader",
-  // props: {
-  //   isAt: Boolean,
-  // },
   data() {
     return {
       type: 0,
     };
   },
-  // watch:{
-  //   isAt: 'isAtMe'
-  // },
   methods: {
     go(type) {
-      // this.type = type;
       this.$emit("go", type);
     },
-    // isAtMe(res) {
-    //  if (res) {
-    //    this.type = 0
-    //  } 
-    // },
   },
 };
 </script>
@@ -62,7 +50,6 @@ export default {
     height: 60px;
     width: 98%;
     margin: 0px auto;
-    // background-color: red;
     display: flex;
     justify-content: flex-start;
     .item {
@@ -71,7 +58,6 @@ export default {
       height: 60px;
       line-height: 60px;
       display: inline-block;
-      // background-color: green;
       margin-right: 16px;
       span {
         width: 100%;

@@ -1,15 +1,14 @@
 <template>
-  <div class="otherprofile">
+  <div class="otherprofile clearfix">
     <div class="otherprofile_container">
       <div class="col-md-9 col-sm-9 col-xs-9 left">
         <h3>个人主页</h3>
-        <blog-list :blogList="blogList" v-if="isRouterAlive"></blog-list>
+        <blog-list :blogList="blogList"></blog-list>
         <load-more v-if="isShow" @load="getBlogList"></load-more>
       </div>
       <div class="col-md-3 col-sm-3 col-xs-3 right">
         <user-info
           :userInfo="otherInfo"
-          v-if="isRouterAlive"
           :flag="false"
           :guangzhu="guanzhu"
           @quxiao="unfollow"
@@ -42,7 +41,13 @@ import loadMore from "../components/load-more";
 import formatContent from "../utils/_format";
 export default {
   name: "otherprofile",
-
+  components: {
+    blogList,
+    userInfo,
+    fans,
+    follower,
+    loadMore,
+  },
   data() {
     return {
       // 是否关注了
@@ -63,23 +68,6 @@ export default {
       blogList: [],
       isShow: true,
 
-      //控制视图是否显示的变量
-      isRouterAlive: true,
-    };
-  },
-
-  components: {
-    blogList,
-    userInfo,
-    fans,
-    follower,
-    loadMore,
-  },
-
-  //父组件中通过provide来提供变量，在子组件中通过inject来注入变量。
-  provide() {
-    return {
-      reload: this.reload,
     };
   },
 
@@ -93,29 +81,9 @@ export default {
   },
 
   methods: {
-    reload() {
-      this.isRouterAlive = false; //先关闭，
-      this.close();
-      this.getUserInfo(this.$route.query.otherName);
-      this.$nextTick(function () {
-        this.isRouterAlive = true; //再打开
-      });
-    },
-
-    // 将一些数据清空，防止造成不必要的污染
-    close() {
-      this.fansList = [];
-      this.followerList = [];
-      this.fanflag = false;
-      this.followerflag = false;
-      this.blogList = [];
-      this.pageIndex = 0;
-    },
-
+  
     profile(otherName) {
-      // if (this.$store.state.followerList.length == 0) {
-      //   this.getMeFollows();
-      // }
+     
       if (otherName == this.$store.state.userInfo.userName) {
         sessionStorage.removeItem("otherName");
         this.$router.push({
@@ -160,7 +128,7 @@ export default {
     },
 
     // 获取自己的关注人
-     getMeFollows(userName) {
+    getMeFollows(userName) {
       let URL = `/user_relation/getfollows`;
       this.axios
         .post(URL, {
@@ -168,9 +136,9 @@ export default {
         })
         .then((res) => {
           // 判断用户是否关注当前用户
-          this.guanzhu = res.userList.some(item => {
+          this.guanzhu = res.userList.some((item) => {
             return item.userName == userName;
-          })
+          });
           // 存入 vuex
           this.$store.dispatch("saveFollowerList", res.userList);
           this.$store.dispatch("saveFollowerNum", res.count);
@@ -185,8 +153,8 @@ export default {
       } else {
         window.sessionStorage.setItem("otherName", userName);
       }
-        this.getMeFollows(userName);
-  
+      this.getMeFollows(userName);
+
       let URL = `/user/getOtherInfo/` + userName;
       this.axios.get(URL).then((res) => {
         this.otherInfo = res;
@@ -251,5 +219,15 @@ export default {
       }
     }
   }
+}
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0px;
+  visibility: hidden;
+}
+.clearfix {
+  *zoom: 1;
 }
 </style>

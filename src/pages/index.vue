@@ -1,5 +1,5 @@
 <template>
-  <div class="souye">
+  <div class="souye clearfix">
     <div class="index_container">
       <div class="col-md-9 col-sm-9 col-xs-9 left">
         <input-item @fabu="fabu" :content="content"></input-item>
@@ -14,7 +14,6 @@
       </div>
       <div class="col-md-3 col-sm-3 col-xs-3 right">
         <user-info
-          v-if="isRouterAlive"
           :userInfo="userInfo"
           @atMe="$router.push('/atMe')"
           :atMe="atcount"
@@ -54,6 +53,8 @@ export default {
   data() {
     return {
       isShow: true, //表示是否显示加载更多
+
+      // 发布微博的内容
       content: "",
 
       blogList: [],
@@ -73,8 +74,7 @@ export default {
       // @我的数量
       atcount: 0,
 
-      //控制视图是否显示的变量
-      isRouterAlive: true,
+     
     };
   },
 
@@ -87,13 +87,9 @@ export default {
     loadMore,
   },
 
-  //父组件中通过provide来提供变量，在子组件中通过inject来注入变量。
-  provide() {
-    return {
-      reload: this.reload,
-    };
-  },
-  created() {
+
+  
+  mounted() {
     this.getBlogList();
     this.getAt();
   },
@@ -116,7 +112,9 @@ export default {
             this.$message.error(res.message);
           } else {
             this.$message.success("发布微博成功");
-            this.getBlogList();
+              setTimeout(() => {
+              window.location.reload();
+            }, 500);
           }
         });
     },
@@ -209,5 +207,15 @@ export default {
     margin: 0 auto;
     padding-top: 10px;
   }
+}
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0px;
+  visibility: hidden;
+}
+.clearfix {
+  *zoom: 1;
 }
 </style>

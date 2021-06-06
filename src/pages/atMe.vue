@@ -4,7 +4,7 @@
       <h3>提到我的（{{ readnum }}未读）</h3>
       <div class="col-md-9 col-sm-9 col-xs-9 left">
         <input-item @fabu="fabu" :content="content"></input-item>
-        <blog-list :blogList="blogList" v-if="isRouterAlive" :huifu="true" @hui="hui"></blog-list>
+        <blog-list :blogList="blogList" :huifu="true" @hui="hui"></blog-list>
         <load-more v-if="isShow" @load="getBlogList"></load-more>
       </div>
     </div>
@@ -24,50 +24,66 @@ export default {
   },
   data() {
     return {
-      isShow: true, //表示是否显示加载更多
+      //表示是否显示加载更多
+      isShow: true, 
+
       blogList: [],
-      readnum: 4,
+
+      // 未读的数量
+      readnum: 0,
+
+      // 回复的内容
       content: "",
-      isRouterAlive: true,
+
+      // 当前博客页数
       pageIndex: 0,
+
+      // at
       members: [],
     };
   },
+
   mounted() {
     this.getBlogList();
   },
-  //父组件中通过provide来提供变量，在子组件中通过inject来注入变量。
-  provide() {
-    return {
-      reload: this.reload,
-    };
-  },
-  methods: {
-    reload() {
-      this.isRouterAlive = false; //先关闭，
-      this.$nextTick(function () {
-        this.isRouterAlive = true; //再打开
-      });
-    },
 
+  methods: {
+  
+   // 发布博客
     fabu(content) {
-      this.content = content;
+      this.axios
+        .post("/blog/create", {
+          content,
+        })
+        .then((res) => {
+          if (res.errno) {
+            this.$message.error(res.message);
+          } else {
+            this.$message.success("发布微博成功");
+             setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          }
+        });
     },
 
     getBlogList() {
-      let URL = `/atMe//loadMore/` + this.pageIndex;
+      let URL = `/atMe/loadMore/` + this.pageIndex;
       this.axios.get(URL).then((res) => {
         this.readnum = res.count;
+        // 格式化博客信息
         this.blogList = this.blogList.concat(res.blogList.map((item) => formatContent(item)));
         this.pageIndex = res.pageIndex + 1;
         this.isShow = !res.isEmpty;
       });
     },
 
-    // 回复
+    // 点击博客回复
     hui(content) {
+      // 将内容传递给子组件
       this.content = content;
     },
+    
   },
 };
 </script>

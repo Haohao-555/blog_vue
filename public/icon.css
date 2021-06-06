@@ -23,6 +23,7 @@
 
 .icon-fensi:before {
   content: "\e629";
+  font-size: 12px;
 }
 
 .icon-gerenzhuye:before {

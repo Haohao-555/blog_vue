@@ -24,10 +24,6 @@ export default {
       let store = window.sessionStorage.getItem("store")
       if (store) {
         this.$store.dispatch("saveUserInfo", JSON.parse(store).userInfo);
-        // this.$store.dispatch("saveFollowerList", store.userList);
-        // this.$store.dispatch("saveFollowerNum", store.followerNum);
-        // this.$store.dispatch("saveFanList", store.userList);
-        // this.$store.dispatch("saveFansNum", store.fansNum);
         sessionStorage.removeItem("store"); 
       } else {
         this.axios.get("/user/isLogin").then((res) => {
@@ -42,6 +38,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./assets/scss/reset.scss";
-@import "./assets/scss/icon.css";
+@import "../public/reset.scss";
+@import "../public/icon.css";
 </style>

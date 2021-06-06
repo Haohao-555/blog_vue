@@ -2,7 +2,7 @@
   <div class="login">
     <div class="form-horizontal" v-if="!isLogin">
       <div class="form-group">
-        <h3 style="margin-left: 39px">登录</h3>
+        <h3 style="margin-left: 50px">登录</h3>
       </div>
       <div class="form-group">
         <label for="inputAccount" class="col-sm-2 control-label">账号：</label>

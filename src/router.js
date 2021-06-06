@@ -1,14 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './pages/home'
-import Index from './pages/index'
-import Otherprofile from './pages/otherprofile'
-import Square from './pages/square'
-import Setting from './pages/setting'
-import Profile from './pages/profile'
-import Login from './pages/login'
-import Register from './pages/register'
-import AtMe from './pages/atMe'
+
+
 import Cookie from 'vue-cookie'
 import constant from './conf/constant'
 
@@ -16,6 +10,8 @@ Vue.use(Router)
 
 
 const router = new Router({
+    // mode: 'history',
+    // base: '/weibo/',
     routes: [{
         path: '/',
         name: 'home',
@@ -25,31 +21,31 @@ const router = new Router({
             { // 首页
                 path: '/index',
                 name: 'Index',
-                component: Index,
+                component: () => import('./pages/index'),
             },
             {  // 其他人主页
                 path: '/Otherprofile/:username',
                 name: 'Otherprofile',
-                component: Otherprofile,
+                component:  () => import('./pages/otherprofile'),
             },
             {  // 广场页
                 path: '/square',
                 name: 'Square',
-                component: Square,
+                component: () => import('./pages/square'),
             },
             {  // 设置页
                 path: '/setting',
                 name: 'Setting',
-                component: Setting,
+                component: () => import('./pages/setting'),
             },
             { // atMe
                 path: '/atMe',
                 name: 'AtMe',
-                component: AtMe,
+                component: () => import('./pages/atMe'),
             },{
                 path: '/profile',
                 name: 'Profile',
-                component: Profile,
+                component: () => import('./pages/profile'),
 
             }
         ]
@@ -57,12 +53,12 @@ const router = new Router({
     {
         path: '/login',
         name: 'Login',
-        component: Login,
+        component: () => import('./pages/login'),
     },
     {
         path: '/register',
         name: 'Register',
-        component: Register,
+        component: () => import('./pages/register'),
     }
     ]
 })

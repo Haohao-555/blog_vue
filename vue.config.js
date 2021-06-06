@@ -4,7 +4,7 @@ module.exports = {
       port:8080,
       proxy:{
         '/api':{
-          target:'http://127.0.0.1:7000',
+          target:'http://127.0.0.1:8000',
           changeOrigin:true,
           pathRewrite:{
             '/api':'/api'
@@ -12,12 +12,20 @@ module.exports = {
         }
       }
     },
-    // publicPath:'/app',
-    // outputDir:'dist',
-    // indexPath:'index2.html',
-    // lintOnSave:false,
+    publicPath:'./',
     productionSourceMap:false,
-    // chainWebpack:(config)=>{
-    //   config.plugins.delete('prefetch');
-    // }
+    configureWebpack: (config) => {
+      config.mode = 'production';
+      config["performance"] = {
+        "maxEntrypointSize": 10000000,
+        "maxAssetSize": 30000000,
+      }
+    },
+    css: {
+      extract:{
+         ignoreOrder: true,
+      } 
+    },
+
+    
   }

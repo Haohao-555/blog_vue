@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <div class="form-horizontal" v-if="!islogin">
-      <h2>注册</h2>
+      <h2 style="margin-bottom:20px;">注册</h2>
       <div class="form-group">
         <div class="col-sm-8">
           <input
