@@ -23,7 +23,7 @@ Vue.config.productionTip = false
 // axios 挂载 vue 原型上 后期直接使用 this.axios 直接使用即可
 Vue.prototype.axios = axios
 
-Vue.prototype.$message = Message
+Vue.prototype.$message = Message;
 Vue.prototype.$cookie = VueCookie;
 
 //注册 cookie

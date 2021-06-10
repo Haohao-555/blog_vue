@@ -1,7 +1,7 @@
 <template>
   <div class="atMe">
     <div class="atMe_container">
-      <h3>提到我的（{{ readnum }}未读）</h3>
+      <!-- <h3>提到我的（{{ readnum }}未读）</h3> -->
       <div class="col-md-9 col-sm-9 col-xs-9 left">
         <input-item @fabu="fabu" :content="content"></input-item>
         <blog-list :blogList="blogList" :huifu="true" @hui="hui" @profile="profile"></blog-list>
@@ -75,14 +75,15 @@ export default {
         });
       } else {
         this.$router.push({
-          path: "/Otherprofile/" + otherName,
+          // path: "/Otherprofile/" + otherName,
+           path: "/Otherprofile",
           query: {
             otherName,
           },
         });
       }
     },
-    
+
     getBlogList() {
       let URL = `/atMe/loadMore/` + this.pageIndex;
       this.axios.get(URL).then((res) => {

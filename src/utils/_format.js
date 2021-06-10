@@ -12,7 +12,6 @@
        constant.REG_FOR_AT_WHO,
         (matchStr, nickName, userName) => {
              return `<a>@${nickName} - ${userName}</a>`
-           
         }
     )
 

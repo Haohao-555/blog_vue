@@ -10,8 +10,9 @@ Vue.use(Router)
 
 
 const router = new Router({
-    mode: 'history',
-    base: '/weibo/',
+    // 本地调试 mode 需要备注掉，上线需要取消备注
+    // mode: 'history',
+    // base: '/weibo/',
     routes: [{
         path: '/',
         name: 'home',
@@ -24,7 +25,9 @@ const router = new Router({
                 component: () => import('./pages/index'),
             },
             {  // 其他人主页
-                path: '/Otherprofile/:username',
+                // path: '/Otherprofile/:username',
+                // path: '/:username',
+                path: '/Otherprofile',
                 name: 'Otherprofile',
                 component:  () => import('./pages/otherprofile'),
             },

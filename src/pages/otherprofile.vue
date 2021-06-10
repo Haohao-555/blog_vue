@@ -67,7 +67,6 @@ export default {
       pageIndex: 0,
       blogList: [],
       isShow: true,
-
     };
   },
 
@@ -75,15 +74,8 @@ export default {
     this.getUserInfo(this.$route.query.otherName);
   },
 
-  watch: {
-    // 监听路由变化来控制组件的加载
-    $route: "reload",
-  },
-
   methods: {
-  
     profile(otherName) {
-     
       if (otherName == this.$store.state.userInfo.userName) {
         sessionStorage.removeItem("otherName");
         this.$router.push({
@@ -91,7 +83,8 @@ export default {
         });
       } else {
         this.$router.push({
-          path: "/Otherprofile/" + otherName,
+          // path: "/Otherprofile/" + otherName,
+          path: "/Otherprofile",
           query: {
             otherName,
           },

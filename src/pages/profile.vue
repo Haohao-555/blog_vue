@@ -1,6 +1,6 @@
 <template>
-  <div class="souye clearfix">
-    <div class="index_container">
+  <div class="profile clearfix">
+    <div class="profile_container clearfix">
       <div class="col-md-9 col-sm-9 col-xs-9 left">
         <input-item @fabu="fabu" :content="content"></input-item>
         <blog-list :blogList="blogList" :huifu="false" :hui="hui"></blog-list>
@@ -72,15 +72,37 @@ export default {
 
       // @我的数量
       atcount: 0,
+
+      timer: null,
     };
   },
-
+  created() {
+    // 每次进入界面时，先清除之前的所有定时器，然后启动新的定时器
+    clearInterval(this.timer);
+    this.timer = null;
+    this.setTimer();
+  },
+  destroyed: function () {
+    // 每次离开当前界面时，清除定时器
+    clearInterval(this.timer);
+    this.timer = null;
+  },
   mounted() {
     this.getBlogList();
     this.getAt();
+    // this.getFans();
+    // this.getFollows();
   },
 
   methods: {
+    // 定时器
+    setTimer() {
+      if (this.timer == null) {
+        this.timer = setInterval(() => {
+          this.getAt();
+        }, 10000);
+      }
+    },
     // 发布博客
     fabu(content) {
       // console.log("发布前接收的参数是", content);
@@ -114,7 +136,8 @@ export default {
         //   this.getFollows();
         // }
         this.$router.push({
-          path: "Otherprofile/" + otherName,
+          // path: "Otherprofile/" + otherName,
+           path: "/Otherprofile",
           query: {
             otherName,
           },
@@ -189,6 +212,14 @@ export default {
 };
 </script>
 <style lang="scss">
+.profile {
+  width: 100%;
+  .profile_container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 10px;
+  }
+}
 .clearfix:after {
   content: "";
   display: block;

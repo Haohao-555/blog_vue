@@ -52,7 +52,8 @@ export default {
         });
       } else {
         this.$router.push({
-          path: "/Otherprofile/" + otherName,
+          // path: "/Otherprofile/" + otherName,
+           path: "/Otherprofile",
           query: {
             otherName,
           },

@@ -51,7 +51,7 @@ export default {
   a {
     &:hover {
       cursor: pointer;
-      text-decoration: none;
+      // text-decoration: none;
     }
   }
   .blog_container {

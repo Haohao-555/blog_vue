@@ -19,7 +19,7 @@ module.exports = {
       config["performance"] = {
         "maxEntrypointSize": 10000000,
         "maxAssetSize": 30000000,
-      }
+      }  
     },
     css: {
       extract:{
@@ -27,5 +27,4 @@ module.exports = {
       } 
     },
 
-    
   }
